@@ -78,7 +78,7 @@ func RecommendAlgorithms(file *os.File, lastUsedHours int, attention float64, si
 		luhW = 3
 	}
 
-	// ---------- 加密算法评分 ----------
+	// encryption algorithm score
 	encCandidates := []string{"aes256gcm", "aes256gcmsiv", "xchacha20poly1305"}
 	encScores := map[string]float64{"aes256gcm": 0, "aes256gcmsiv": 0, "xchacha20poly1305": 0}
 
@@ -120,7 +120,7 @@ func RecommendAlgorithms(file *os.File, lastUsedHours int, attention float64, si
 	}
 	rec.Encryption = bestEnc
 
-	// ---------- 压缩算法评分 ----------
+	// compress algorithm score
 	compCandidates := []string{"zip", "lzma2", "lz4", "zstd"}
 	compScores := map[string]float64{"zip": 0, "lzma2": 0, "lz4": 0, "zstd": 0}
 	isAlreadyCompressed := false
@@ -199,7 +199,7 @@ func RecommendAlgorithms(file *os.File, lastUsedHours int, attention float64, si
 		bestComp = "lz4"
 	}
 
-	// SkipCompression 逻辑
+	// SkipCompression workflow
 	if isAlreadyCompressed && (bestCompScore < 0.5 || (bestComp == "lz4" && tradeoff != "ratio")) {
 		rec.SkipCompression = true
 		rec.Compression = "none"
